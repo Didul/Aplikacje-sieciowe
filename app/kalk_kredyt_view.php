@@ -1,5 +1,7 @@
-<?php require_once dirname (__FILE__) .'/../config.php'; ?>
-
+<?php
+//Tu już nie ładujemy konfiguracji - sam widok nie będzie już punktem wejścia do aplikacji.
+//Wszystkie żądania idą do kontrolera, a kontroler wywołuje skrypt widoku.
+?>
 
 <!DOCTYPE HTML>
 <html>
@@ -8,21 +10,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Kalkulator kredytowy</title>
         <link rel="stylesheet" href="<?php echo _APP_ROOT.'/style.css'; ?>">
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     </head>
     <body>
+        <div style="width:90%; margin: 2em auto;">
+            <a href="<?php print(_APP_ROOT); ?>/app/security/logout.php" class="pure-button pure-button-active">Wyloguj</a>
+        </div>
+        
         <div id="container">
             <form action="<?php echo _APP_URL; ?>/app/kalk_kredyt.php" method="post">
                 <h1>Kalkulator kredytowy</h1>
                 <label for="sum">Ile potrzebujesz pieniędzy?
-                    <input type="text" name="sum" value="<?php if (isset($sum)) echo $sum; ?>" placeholder="np. 1000 zł"/>
+                    <input type="text" name="sum" value="<?php out($sum);?>" placeholder="np. 1000 zł"/>
                 </label>
 
                 <label for="period">W jakim czasie zamierzasz spłacić kredyt?
-                    <input type="text" name="period" value="<?php if (isset($period)) echo $period; ?>" placeholder="np. 12 miesięcy"/>
+                    <input type="text" name="period" value="<?php out($period);?>" placeholder="np. 12 miesięcy"/>
                 </label>
 
                 <label for="rate">Jakie oprocentowanie Cię interesuje?
-                    <input id="rate" type="range" name="rate" min="0" max="0.07" step="0.005" value="<?php if (isset($rate)) echo $rate; ?>" /><div id="percent"></div>
+                    <input id="rate" type="range" name="rate" min="0" max="0.07" step="0.005" value="<?php out($rate);?>" /><div id="percent"></div>
                 </label>
                 
                 <input type="submit" value="Oblicz" />
@@ -46,7 +53,7 @@
                         echo 'Średnio rata będzie wynosić '.round(($sumAll+$temp)/$period,2).' zł.';
                     }
                 ?>
-                
+                                
             </form>
         </div>
         <script type="text/javascript">
