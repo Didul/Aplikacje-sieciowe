@@ -41,7 +41,7 @@
         }
 
         //nie ma sensu walidować dalej gdy brak parametrów
-        if (count ( $messages ) != 0) return false;
+        if (empty( $messages )) {
 
             // sprawdzenie, czy $x i $y są liczbami całkowitymi
             if (! (is_numeric( $sum ) && $sum > 0)) {
@@ -54,14 +54,15 @@
 
             if (! is_numeric( $rate )) {
                 $messages [] = 'Trzecia wartość nie jest liczbą';
-            }
-            
-            if (count ( $messages ) != 0) return false;
-            else return true;
+            }	
+
         }
+
+    }
 
     function process(&$sum,&$period,&$rate,&$messages,&$sumAll) {
         if (empty ( $messages )) { // gdy brak błędów
+            global $role;
 
             //konwersja parametrów na int
             $sum = intval($sum);
@@ -69,15 +70,16 @@
             $period = intval($period);
             $rate = floatval($rate);
             $sumAll = 0;
-            
+
             //wykonanie operacji
-            
+
+            $hm = $sum/$period;
+
             for ($i = 0; $i < $period; $i++) {
-                $payment = $temp/($period-$i);
+                $payment = ($temp / $period - $i);
                 $temp -= $payment;
                 $sumAll += $payment*(1+$rate);
             }
-
         }
     }
         
@@ -90,13 +92,10 @@
     $rate = null;
     $sumALL = null;
     $messages = array();
-    
 
     //pobierz parametry i wykonaj zadanie jeśli wszystko w porządku
     getParams($sum,$period,$rate);
-    
-    if ( validate($sum,$period,$rate,$messages) ) {
-        // gdy brak błędów
+    if ( validate($sum,$period,$rate,$messages) ) { // gdy brak błędów
         process($sum,$period,$rate,$messages,$sumAll);
     }
 
