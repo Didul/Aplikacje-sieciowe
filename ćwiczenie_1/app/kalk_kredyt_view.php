@@ -15,17 +15,17 @@
                 <h1>Kalkulator kredytowy</h1>
                 <label for="sum">Ile potrzebujesz pieniędzy?
                     <input type="text" name="sum" value="<?php if (isset($sum)) echo $sum; ?>" placeholder="np. 1000 zł"/>
-                </label>
+                </label></br>
 
                 <label for="period">W jakim czasie zamierzasz spłacić kredyt?
                     <input type="text" name="period" value="<?php if (isset($period)) echo $period; ?>" placeholder="np. 12 miesięcy"/>
-                </label>
+                </label></br>
 
                 <label for="rate">Jakie oprocentowanie Cię interesuje?
                     <input id="rate" type="range" name="rate" min="0" max="0.07" step="0.005" value="<?php if (isset($rate)) echo $rate; ?>" /><div id="percent"></div>
-                </label>
+                </label></br>
                 
-                <input type="submit" value="Oblicz" />
+                <input type="submit" value="Oblicz" /></br>
                 
                 <?php
                     //wyświeltenie listy błędów, jeśli istnieją

@@ -1,0 +1,3 @@
+trzeba poprawić walidację, najlepiej przepisać od nowa
+trzeba dorzucić własne style
+trzeba dorzucić top.html i bottom.html

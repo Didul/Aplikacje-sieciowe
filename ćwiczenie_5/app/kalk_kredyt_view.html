@@ -1,0 +1,55 @@
+{extends file=$conf->root_path|cat:"/templates/main.html"}
+
+{block name=footer}przykładowa tresć stopki wpisana do szablonu głównego z szablonu kalkulatora{/block}
+
+{block name=content}
+
+<form action="{$conf->app_url}/app/kalk_kredyt.php" method="post">
+                <h1>Kalkulator kredytowy</h1>
+                <label for="sum">Ile potrzebujesz pieniędzy?
+                    <input type="text" name="sum" value="{$form->sum}" placeholder="np. 1000 zł"/>
+                </label></br>
+
+                <label for="period">W jakim czasie zamierzasz spłacić kredyt?
+                    <input type="text" name="period" value="{$form->period}" placeholder="np. 12 miesięcy"/>
+                </label></br>
+
+                <label for="rate">Jakie oprocentowanie Cię interesuje?
+                    <input id="rate" type="range" name="rate" min="0" max="0.07" step="0.005" value="{if $form->rate eq null} 0.01 {else} $form->rate {/if}" />
+                    <div id="percent"></div>
+                </label></br>
+                
+                <input type="submit" value="Oblicz" /></br>
+                
+                <div class="l-box-lrg pure-u-1 pure-u-med-3-5">
+
+                    {* wyświeltenie listy błędów, jeśli istnieją *}
+                    {if $msgs->isError()}
+                            <h4>Wystąpiły błędy: </h4>
+                            <ol class="err">
+                            {foreach $msgs->getErrors() as $err}
+                            {strip}
+                                    <li>{$err}</li>
+                            {/strip}
+                            {/foreach}
+                            </ol>
+                    {/if}
+
+                    {* wyświeltenie listy informacji, jeśli istnieją *}
+                    {if $msgs->isInfo()}
+                            <h4>Informacje: </h4>
+                            <ol class="inf">
+                            {foreach $msgs->getInfos() as $inf}
+                            {strip}
+                                    <li>{$inf}</li>
+                            {/strip}
+                            {/foreach}
+                            </ol>
+                    {/if}
+                    
+                    {if isset({$sumAll->sumAll})&& {$sumAll->sumAll} != null && isset({$sumAll->temp}) && {$sumAll->temp} != null && isset({$sumAll->period}) && {$sumAll->period} != null}
+                            <h4>Kredyt będzie kosztować {$sumAll} zł</h4>
+                    {/if}
+                </div>             
+            </form>
+{/block}
